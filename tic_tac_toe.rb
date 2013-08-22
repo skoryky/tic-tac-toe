@@ -146,7 +146,7 @@ class TicTacToe
   # Returns the winner (:computer or :player) if there is one, :draw if there is a draw, and otherwise nil.
   def winner
     has_more_moves = false
-    iterate_triples do |triple|
+    iterate_triples do |triple, _, _|
       has_more_moves = true if triple.include?(nil)
       uniq = triple.uniq
       if uniq.count == 1 && !uniq.first.nil?
