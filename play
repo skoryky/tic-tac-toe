@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require './tic_tac_toe'
+
+def clear_screen
+  print "\e[H\e[2J"
+end
+
+clear_screen
+ttt = TicTacToe.new
+puts "You are playing '#{ttt.player_symbol}'"
+if ttt.player_symbol == TicTacToe::FIRST_PLAYER_SYMBOL
+  puts 'You make the first move'
+else
+  puts 'The computer makes the first move'
+end
+
+puts ttt.board_string
+
+while ttt.winner.nil?
+  while true
+    print 'Enter your move as "row, column": '
+    input = gets.chomp
+    unless input =~ /\d\s*,\s*\d/
+      puts 'Invalid input, try again'
+      next
+    end
+
+    row, col = input.split(',').map(&:strip)
+    unless ttt.record_player_move(row, col)
+      puts 'Invalid move, try again'
+      next
+    end
+
+    break
+  end
+
+  ttt.make_move
+  clear_screen
+  puts ttt.board_string
+end
+
+case ttt.winner
+when :draw
+  puts 'It was a draw!'
+when :computer
+  puts 'The computer won :('
+when :player
+  puts 'Aww yeah, you won!'
+end
