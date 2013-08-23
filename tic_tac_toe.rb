@@ -10,16 +10,16 @@ class TicTacToe
   attr_reader :player_symbol
 
   def initialize(player_first = rand(2).zero?)
+    restart(player_first)
+  end
+
+  # Clear the board and optionally change the assigned symbols.
+  def restart(player_first = computer_symbol == :o)
     @board ||= Array.new(3) { Array.new(3) }
     @board.map! { |array| array.map! { |_| nil }}  # Clear current @board object.
     @computer_symbol = player_first ? :o : :x
     @player_symbol = player_first ? :x : :o
     make_move unless player_first
-  end
-
-  # Clear the board and optionally change the assigned symbols.
-  def restart(player_first = computer_symbol == :o)
-    initialize(player_first)
   end
 
   # Returns true if move was valid and false otherwise.
